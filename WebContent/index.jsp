@@ -60,6 +60,8 @@
 <a href=""></a>
  -->
  
+ <!-- hi~ -->
+ 
 <div class="eSlide"><%@include file ="./event_slide.jsp" %></div>
 <div class="bReview"><div style="position:absolute; font-weight:bold; top:20px; left:70%"><a href="camping/camp_list.camp">+ 더보기</a><br /></div><%@include file ="./best_review.jsp" %></div>
 <div class="qnaMain"><div style="position:absolute; font-weight:bold; top:-30px; left:90%"><a href="free/free_list.free">+ 더보기</a><br /></div><%@include file ="./qnaMain.jsp" %></div>
