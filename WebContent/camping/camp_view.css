@@ -1,0 +1,133 @@
+/*
+camp_view.css
+*/
+a:link { color:#4f4f4f; text-decoration:none; }
+a:visited { color:#4f4f4f; text-decoration:none; }
+a:hover { color:#2788ff; text-decoration:none; font-weight:bold; }
+a:focus { color:#2788ff; text-decoration:none; }
+a:active { color:#2788ff; text-decoration:none; }
+
+body { margin:0; font-size:13px; }
+a { color:inherit; text-decoration:none; }
+ol, ul { list-style:none; }
+#wrapper, p { width:1250px; margin:0 auto; position:relative; }
+#top {
+	width:100%; height:50px; text-align:center; font-size:25px; color:#4f4f4f; 
+	font-weight:bold; padding-top:30px; 
+}
+#left {
+	width:750px; height:500px; text-align:center;
+	padding:5px; margin:15px 10px; float:left; margin-top:100px; 
+}
+
+.slideshow {
+	height:500px; min-width:750px; overflow:hidden; position:relative; margin:0 auto; width:100%;
+}
+
+.slideshow-slides { height:100%; position:absolute; width:100%; }
+
+.slideshow-slides .slide {
+	height:100%; width:100%; overflow:hidden; position:absolute; 
+}
+
+.slideshow-slides .slide img {
+	left:0%; margin-left:0px; position:absolute;
+}
+
+.slideshow-nav a, .slideshow-indicator a {
+	background:rgba(0, 0, 0, 0); overflow:hidden;
+}
+
+.slideshow-nav a:before, .slideshow-indicator a:before {
+	content:url("camp_img/sprites.png"); display:inline-block; font-size:0; line-height:0;
+}
+
+.slideshow-nav a {
+	position:absolute; top:50%; left:50%; width:72px; height:72px; margin-top:-36px;
+}
+
+.slideshow-nav a.prev { margin-left:-480px; }
+.slideshow-nav a.prev:before { margin-top:-20px; }
+.slideshow-nav a.next { margin-left:408px; }
+.slideshow-nav a.next:before { margin:-20px 0 0 -80px; }
+.slideshow-nav a.disabled { display:none; }
+
+.slideshow-indicator {
+	bottom:30px; height:16px; left:0; position:absolute; right:0; text-align:center;
+}
+
+.slideshow-indicator a {
+	display:inline-block; width:16px; height:16px; margin:0 3px; 
+}
+
+.slideshow-indicator a.active { cursor:default; }
+.slideshow-indicator a:before { margin-left:-110px; }
+.slideshow-indicator a.active:before { margin-left:-130px; }
+
+
+
+.content { 
+	border:0px blue solid;
+	padding:5px; margin:30px 10px; font-size:16px;
+	width:700px; height:30px; text-align:left; overflow:
+}
+.keyword {
+	border:0px blue solid;
+	padding:5px; margin:15px 10px; font-size:16px;
+	width:700px; height:30px; text-align:left;
+}
+.info {
+	padding:5px; margin:15px 10px;
+	width:700px; height:20px; text-align:left;
+}
+.right {
+	border:1px lightblue solid; width:450px; height:1000; text-align:center;
+	padding:20px; margin:15px auto; float:right; left:300px; top:200px;
+}
+.goodscrapreply {
+	width:400px; height:50px; padding:15px; margin:15px auto; text-align:center;
+} 
+.imgs {
+	border:1px #efefef solid; width:400px; height:445px; text-align:center;
+	padding:5px; margin:15px auto; padding-top:15px;
+}
+.img1, .img3 {
+	border:0px blue solid; width:180px; height:180px; text-align:center;
+	padding:5px; 
+}
+.img2, .img4 {
+	border:0px blue solid; width:180px; height:180px; text-align:center;
+	padding:5px; 
+}
+.followingbtn { width:60px; height:35px; border:1px solid black; margin-left:10px; }
+.followbtn { width:60px; height:35px; border:2px solid lightblue; margin-left:10px; }
+.member {
+	width:400px; height:50px; padding:5px; margin:0 auto; text-align:left;
+}
+.memberImg {
+	padding:5px; margin:10px; float:left;
+}
+.memberInfo {
+	margin:10px; float:left;
+}
+.follow {
+	margin:10px; float:right; vertical-align:middle;
+}
+.imgBox {
+	border:0px #000 solid; width:260px; height:190px; padding:5px; 
+	text-align:center; display:table-cell; vertical-align:middle;
+}
+.crinfo {
+	width:260px; height:30px; padding:5px; margin:10px; text-align:left; vertical-align:middle;
+	font-size:20px; display:table;
+}
+.goodscrapreply { padding:5px; margin:10px; display:table-cell; }
+.crcontent { 
+	padding:5px; margin:0 auto;
+	width:240px; height:30px; text-align:left; overflow:hidden;
+}
+.pdtName { font-size:15px; padding-top:7px; padding-bottom:3px; font-weight:bold; }
+.pdtPrice { color:red; font-weight:bold; }
+#bottom { float:left; width:100%; margin-left:550px; margin-top:50px; }
+
+#btnsch { width:100px; height:35px; }
