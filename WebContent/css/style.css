@@ -1,0 +1,63 @@
+
+	body { margin:0; }
+	
+	.contents { width:1000px; margin:0 auto;}
+
+	.mainTitle { text-align:center; margin-top:50px;}
+
+	.slideshow {
+		background:#000; width:300px; overflow:hidden; position:relative;
+	}
+	
+	.slideshow-slides { 
+	height:100%; position:absolute; width:70%; 
+	}
+	
+	.slideshow-slides .slide {		
+		height:100%; width:70%; overflow:hidden; position:absolute; 
+	}
+	
+	.slideshow-slides .slide img {
+		left:50%; margin-left:-800px; position:absolute;
+	}
+
+	.slideshow-nav a, .slideshow-indicator a {
+		background:rgba(0, 0, 0, 0); overflow:hidden;
+	}
+	.slideshow-nav a:before, .slideshow-indicator a:before {
+		content:url("../images/sprites.png"); display:inline-block; font-size:0; line-height:0;
+	}
+	.slideshow-nav a {
+		position:absolute; top:50%; left:50%; width:72px; height:72px; margin-top:-36px;
+	}
+	.slideshow-nav a.prev { margin-left:-480px; }
+	.slideshow-nav a.prev:before { margin-top:-20px; }
+	.slideshow-nav a.next { margin-left:408px; }
+	.slideshow-nav a.next:before { margin:-20px 0 0 -80px; }
+	.slideshow-nav a.disabled { display:none; }
+
+	.slideshow-indicator {
+		bottom:30px; height:16px; left:0; position:absolute; right:0; text-align:center;
+	}
+	.slideshow-indicator a {
+		display:inline-block; width:16px; height:16px; margin:0 3px; 
+	}
+	.slideshow-indicator a.active { cursor:default; }
+	.slideshow-indicator a:before { margin-left:-110px; }
+	.slideshow-indicator a.active:before { margin-left:-130px; }
+
+
+	ul { padding-left:0; }
+	ul li { list-style-type:none; }
+	a { color:inherit; text-decoration:none; }
+
+	.page-header.sticky { position:fixed; top:0; }
+	.page-header > .inner { margin:auto; width:900px; }
+	.page-header { border-bottom:1px solid rgb(204, 204, 204); width:100%; }
+	.primary-nav { float:right; line-height:65px; letter-spacing:1px; }
+	.primary-nav li { float:left; }
+	.primary-nav a { display:block; padding:0 1.36em; }
+
+	.img { margin:0 auto; width:1000;}
+	.img img { width:300px; position:auto; margin-left:auto; }
+	.img div { float:left; width:300; margin:10px; border:1px solid black; }
