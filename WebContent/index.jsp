@@ -32,11 +32,6 @@
 </style>
 <%@include file ="./header.jsp" %>
 
-
-
-
-
-
 <!-- 
 <a href="member/mypage.mem">정보수정</a><br />
 <a href="addr/addr_list.addr">회원주소록</a><br />
