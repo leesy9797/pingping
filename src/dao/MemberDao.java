@@ -8,7 +8,7 @@ import vo.*;
 
 public class MemberDao {
 	private static MemberDao memberDao;
-	private static Connection conn;		// static���� �ٲ�
+	private static Connection conn;		// static으로 바꿈
 	private MemberDao() {}
 	
 	public static MemberDao getInstance() {
@@ -22,7 +22,7 @@ public class MemberDao {
 		this.conn = conn;
 	}
 
-	// 회원(가입 수정 탈퇴)
+	// 회원가입
 	public int memberJoin(MemberInfo memberInfo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -73,6 +73,7 @@ public class MemberDao {
 		return result;
 	}
 
+	// 회원정보 수정
 	public int memberUpdate(MemberInfo memberInfo) {
 		int result = 0;
 		Statement stmt = null;
@@ -102,9 +103,10 @@ public class MemberDao {
 		}
 		System.out.println(result);
 
-		return result + 1;	//서비스 파일에서 + 수량을 맞춰줘야 해서 이미 2개가 있고 +1개 추가요
+		return result + 1;	//서비스 파일에서 result 값을 맞춰주기 위함
 	}
 
+	// 회원 탈퇴
 	public int memberDelete(String miid) {
 		int result = 0;
 		Statement stmt = null;
@@ -144,7 +146,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("searchId() �޼ҵ� ����");
+			System.out.println("searchId() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -153,8 +155,9 @@ public class MemberDao {
 		return memberInfo;
 
 	}
-	
-	public static MemberInfo resetPwd(String uname, String phone) { // static���� �ٲ�
+
+	// 비밀번호 재설정
+	public static MemberInfo resetPwd(String uname, String phone) { // static으로 바꿈
 		Statement stmt = null;
 		ResultSet rs = null;
 		MemberInfo memberInfo = null;
@@ -167,7 +170,7 @@ public class MemberDao {
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
-			// rs�� ������ ��ǰ�� ���� ��� 
+			// rs에 보여줄 상품이 있을 경우
 				memberInfo = new MemberInfo();
 				memberInfo.setMi_email(rs.getString(1));
 				
@@ -175,7 +178,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() �޼ҵ� ����");
+			System.out.println("resetPwd() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -185,7 +188,7 @@ public class MemberDao {
 
 	}
 
-	public static MemberInfo chkEmail(String email) { // static���� �ٲ�
+	public static MemberInfo chkEmail(String email) { // static으로 바꿈
 		Statement stmt = null;
 		ResultSet rs = null;
 		MemberInfo memberInfo = null;
@@ -197,14 +200,14 @@ public class MemberDao {
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
-			// rs�� ������ ��ǰ�� ���� ��� 
+			// rs에 보여줄 상품이 있을 경우
 				memberInfo = new MemberInfo();
 				memberInfo.setMi_email(rs.getString(1));
 	            System.out.println(memberInfo.getMi_email());
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() �޼ҵ� ����");
+			System.out.println("resetPwd() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -214,7 +217,7 @@ public class MemberDao {
 
 	}
 	
-	public static int setPwd(MemberInfo memberInfo) { // static���� �ٲ�
+	public static int setPwd(MemberInfo memberInfo) { // static으로 바꿈
 		Statement stmt = null;
 		int result = 0;
 		
@@ -226,7 +229,7 @@ public class MemberDao {
 			result = stmt.executeUpdate(sql);
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() �޼ҵ� ����");
+			System.out.println("resetPwd() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -268,7 +271,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("getAddrList() �޼ҵ� ����");
+			System.out.println("getAddrList() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -290,7 +293,7 @@ public class MemberDao {
 			if (memberInfo.getMa_basic().equals("y")) {
 				sql = "update t_member_addr set ma_basic = 'n' where mi_email = '" + memberInfo.getMi_email() + "' ";
 				result = stmt.executeUpdate(sql);
-				System.out.println("ù ��° sql : " + sql);
+				System.out.println("첫 번째 : " + sql);
 				
 			} 
 			
@@ -300,12 +303,12 @@ public class MemberDao {
 						 memberInfo.getMa_phone() + "', '" + memberInfo.getMa_zip() + "', '" + 
 						 memberInfo.getMa_addr1() + "','" + memberInfo.getMa_addr2() + "', '" + 
 						 memberInfo.getMa_basic() + "')";
-			System.out.println("�� ��° sql : " + sql);
+			System.out.println("두 번째 sql : " + sql);
 					
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("AddrInsert() �޼ҵ� ����");
+			System.out.println("addrInsert() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -326,7 +329,7 @@ public class MemberDao {
 			if (memberInfo.getMa_basic().equals("y")) {
 				sql = "update t_member_addr set ma_basic = 'n' where mi_email = '" + memberInfo.getMi_email() + "' ";
 				result = stmt.executeUpdate(sql);
-				System.out.println("ù ��° sql : " + sql);
+				System.out.println("첫 번째 sql : " + sql);
 				
 			} 
 			sql = "update t_member_addr set ma_name = '" + memberInfo.getMa_name() + "', ma_receiver = '" +
@@ -334,12 +337,12 @@ public class MemberDao {
 				  memberInfo.getMa_zip() + "', ma_addr1 = '" + memberInfo.getMa_addr1() + "', ma_addr2 = '" +
 				  memberInfo.getMa_addr2() + "', ma_basic = '" + memberInfo.getMa_basic() + "' " + 
 				  " where ma_idx = '" + memberInfo.getMa_idx() + "' and mi_email = '" + memberInfo.getMi_email() + "' ";
-			System.out.println("�� ��° sql : " + sql);
+			System.out.println("두 번째 sql : " + sql);
 						
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("cartUpdate() �޼ҵ� ����");
+			System.out.println("cartUpdate() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -357,12 +360,12 @@ public class MemberDao {
 			stmt = conn.createStatement();
 			
 			String sql = "delete from t_member_addr  where ma_idx = '" + maidx + "' and mi_email = '" + miemail + "' ";
-			System.out.println("�� ��° sql : " + sql);
+			System.out.println("sql : " + sql);
 						
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("AddrDelete() �޼ҵ� ����");
+			System.out.println("addrDelete() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -401,7 +404,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("getAddrInfo() �޼ҵ� ����");
+			System.out.println("getAddrInfo() 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -426,7 +429,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getPointCount() �޼ҵ� ����");
+	         System.out.println("getPointCount() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -440,7 +443,7 @@ public class MemberDao {
 	      ResultSet rs = null;   
 	      int save = 0, use = 0, availablePoint = 0;
 
-	      try {   // ��밡�� ����Ʈ = ��������Ʈ - �������Ʈ
+	      try {   // 사용가능 포인트 = 적립포인트 - 사용포인트
 	         String sql = "select sum(mp_point) from t_member_point where mi_email = 'test1@gmail.com' and mp_kind <> 'u'";
 	         stmt = conn.createStatement();
 	         rs = stmt.executeQuery(sql);
@@ -455,7 +458,7 @@ public class MemberDao {
 	         availablePoint = save - use;
 	         
 	      } catch(Exception e) {
-	         System.out.println("getAvailablePoint() �޼ҵ� ����");
+	         System.out.println("getAvailablePoint() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(stmt);
@@ -497,7 +500,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getPointList() �޼ҵ� ����");
+	         System.out.println("getPointList() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -528,7 +531,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowInfo() �޼ҵ� ����");
+	         System.out.println("getFollowInfo() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -569,7 +572,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowerList() �޼ҵ� ����");
+	         System.out.println("getFollowerList() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -610,7 +613,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowingList() �޼ҵ� ����");
+	         System.out.println("getFollowingList() 메소드 오류");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
