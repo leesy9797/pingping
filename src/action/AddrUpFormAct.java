@@ -4,13 +4,13 @@ import javax.servlet.http.*;
 import java.util.*;
 import svc.*;
 import vo.*;
-// ���� �����ִ� act
+// 폼을 보여주는 act
 public class AddrUpFormAct implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MemberInfo memberInfo = new MemberInfo();	// ������ ��ǰ������ ������ �ν��Ͻ�
+		MemberInfo memberInfo = new MemberInfo();	// 수정할 상품정보를 저장할 인스턴스
 		
 		request.setCharacterEncoding("utf-8");
-		int ma_idx = Integer.parseInt(request.getParameter("ma_idx"));	// ������ �ּ� ID
+		int ma_idx = Integer.parseInt(request.getParameter("ma_idx"));	// 수정할 주소 ID
 
 		AddrUpFormSvc memberAddrUpSvc = new AddrUpFormSvc();
 		memberInfo = memberAddrUpSvc.getAddrInfo(ma_idx);

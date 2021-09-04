@@ -17,10 +17,10 @@ public class AddrDelAct implements action.Action {
 		int result = addrDelSvc.addrDelete(maidx, memberInfo.getMi_email());
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);	// dispatch�� �ƴ� sendRedirect ������� �̵�
+		forward.setRedirect(true);	// dispatch가 아닌 sendRedirect 방식으로 이동
 		forward.setPath("addr_list.mem");
 
-		System.out.println("����� AddrDelAct");
+		System.out.println("여기는 AddrDelAct");
 		return forward;
 	}
 }

@@ -10,26 +10,26 @@ public class AddrDelProcAct implements Action {
 	   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		      request.setCharacterEncoding("utf-8");
 		      int maidx = Integer.parseInt(request.getParameter("maidx"));
-		      String miemail = "";	// 이거 뭐지
+		      String miemail = "";	// addrDelete(maidx, miemail)로 호출하는데 안 받아와서 임시로 써놓음
 		      
 		      AddrDelSvc addrDelSvc = new AddrDelSvc();
 		      int result = addrDelSvc.addrDelete(maidx, miemail);
 		      
-		      if (result == 0) {	// �� ������ ����������
+		      if (result == 0) {	// 글 삭제에 실패했으면
 		    	  response.setContentType("text/html; charset=utf-8");
 		    	  PrintWriter out = response.getWriter();
 		    	  out.println("<script>");
-		    	  out.println("alert('�ּ� ������ �����߽��ϴ�.\n�ٽ� �õ��� �ֽʽÿ�.');");
+		    	  out.println("alert('주소 삭제에 실패했습니다.\\n다시 시도해 주십시오.');");
 		    	  out.println("history.back();");
 		    	  out.println("<script>");
-		    	  out.close();	// ���⼭ ����(�� ��Ͽ� �������� ��, ��������(�� ���� ����)���� ������� �ʰ�)
+		    	  out.close();	// 여기서 끝냄(글 등록에 실패했을 때, 다음과정(글 내용 보기)으로 진행되지 않게))
 		      }
 		      
 		      ActionForward forward = new ActionForward();
 		      forward.setRedirect(true);   
-		      // dispatch�� �ƴ� sendRedirect ������� �̵�(sendRedirect������� �ؾ� url�� �ٲ� : �ٲ��� ������ ���ΰ�ħ�� �� �ٽ� ��� or ��������)
+		      // dispatch가 아닌 sendRedirect 방식으로 이동(sendRedirect방식으로 해야 url이 바뀜 : 바뀌지 않으면 새로고침할 때 다시 등록 or 수정실행)
 		      forward.setPath("addr_list.addr?cpage=1");
-		      // �Խñ� ���� ȭ������ �ݹ� �Էµ� �� ��ȣ�� ������ �̵���
+		      // 게시글 보기 화면으로 금방 입력된 글 번호를 가지고 이동함
 		      
 		      return forward;
 		   }

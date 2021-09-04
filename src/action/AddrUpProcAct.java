@@ -10,7 +10,7 @@ public class AddrUpProcAct implements action.Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 
-		System.out.println("�ƾ�, ����� AddrUpProcAct");
+		System.out.println("아아, 여기는 AddrUpProcAct");
 
 		int maidx = Integer.parseInt(request.getParameter("maidx"));
 		String maname = request.getParameter("maname");
@@ -49,16 +49,16 @@ public class AddrUpProcAct implements action.Action {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('���ο� ����� ��Ͻ� ������ �߻��߽��ϴ�. \n�ٽ� �õ��� �ּ���.');");
+			out.println("alert('새로운 배송지 등록시 문제가 발생했습니다. \\n다시 시도해 주세요.');");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
 		}
 		
-		System.out.println("�ƾ�, ����� AddrUpProcAct");
+		System.out.println("아아, 여기는 AddrUpProcAct");
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);	// dispatch�� �ƴ� sendRedirect ������� �̵�
+		forward.setRedirect(true);	// dispatch가 아닌 sendRedirect 방식으로 이동
 		forward.setPath("addr_list.mem");
 		
 		return forward;
