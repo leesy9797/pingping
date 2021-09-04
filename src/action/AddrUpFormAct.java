@@ -4,16 +4,16 @@ import javax.servlet.http.*;
 import java.util.*;
 import svc.*;
 import vo.*;
-// ÆûÀ» º¸¿©ÁÖ´Â act
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ act
 public class AddrUpFormAct implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MemberInfo memberInfo = new MemberInfo();	// ¼öÁ¤ÇÒ »óÇ°Á¤º¸¸¦ ÀúÀåÇÒ ÀÎ½ºÅÏ½º
+		MemberInfo memberInfo = new MemberInfo();	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½
 		
 		request.setCharacterEncoding("utf-8");
-		int ma_idx = Integer.parseInt(request.getParameter("ma_idx"));	// ¼öÁ¤ÇÒ ÁÖ¼Ò ID
+		int ma_idx = Integer.parseInt(request.getParameter("ma_idx"));	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ID
 
-		AddrUpSvc memberAddrUpSvc = new AddrUpSvc();
-		memberInfo = memberAddrUpSvc.getAddr(ma_idx);
+		AddrUpFormSvc memberAddrUpSvc = new AddrUpFormSvc();
+		memberInfo = memberAddrUpSvc.getAddrInfo(ma_idx);
 
 		request.setAttribute("memberInfo", memberInfo);
 

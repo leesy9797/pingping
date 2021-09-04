@@ -10,7 +10,7 @@ public class AddrUpProcAct implements action.Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 
-		System.out.println("¾Æ¾Æ, ¿©±â´Â AddrUpProcAct");
+		System.out.println("ï¿½Æ¾ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ AddrUpProcAct");
 
 		int maidx = Integer.parseInt(request.getParameter("maidx"));
 		String maname = request.getParameter("maname");
@@ -43,22 +43,22 @@ public class AddrUpProcAct implements action.Action {
 		memberInfo.setMa_basic(mabasic);
 		
 		AddrUpProcSvc addrUpProcSvc = new AddrUpProcSvc();
-		int result = addrUpProcSvc.AddrUpdate(memberInfo);
+		int result = addrUpProcSvc.addrUpdate(memberInfo);
 		
 		if (result == 0) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('»õ·Î¿î ¹è¼ÛÁö µî·Ï½Ã ¹®Á¦°¡ ¹ß»ýÇß½À´Ï´Ù. \n´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä.');");
+			out.println("alert('ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. \nï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.');");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
 		}
 		
-		System.out.println("¾Æ¾Æ, ¿©±â´Â AddrUpProcAct");
+		System.out.println("ï¿½Æ¾ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ AddrUpProcAct");
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);	// dispatch°¡ ¾Æ´Ñ sendRedirect ¹æ½ÄÀ¸·Î ÀÌµ¿
+		forward.setRedirect(true);	// dispatchï¿½ï¿½ ï¿½Æ´ï¿½ sendRedirect ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		forward.setPath("addr_list.mem");
 		
 		return forward;

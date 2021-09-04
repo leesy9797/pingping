@@ -14,13 +14,13 @@ public class AddrDelAct implements action.Action {
 		MemberInfo memberInfo = (MemberInfo)session.getAttribute("memberInfo");
 		
 		AddrDelSvc addrDelSvc = new AddrDelSvc();
-		int result = addrDelSvc.AddrDelete(maidx, memberInfo.getMi_email());
+		int result = addrDelSvc.addrDelete(maidx, memberInfo.getMi_email());
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);	// dispatch°¡ ¾Æ´Ñ sendRedirect ¹æ½ÄÀ¸·Î ÀÌµ¿
+		forward.setRedirect(true);	// dispatchï¿½ï¿½ ï¿½Æ´ï¿½ sendRedirect ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		forward.setPath("addr_list.mem");
 
-		System.out.println("¿©±â´Â AddrDelAct");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ AddrDelAct");
 		return forward;
 	}
 }

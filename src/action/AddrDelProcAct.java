@@ -10,25 +10,26 @@ public class AddrDelProcAct implements Action {
 	   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		      request.setCharacterEncoding("utf-8");
 		      int maidx = Integer.parseInt(request.getParameter("maidx"));
+		      String miemail = "";	// ì´ê±° ë­ì§€
 		      
-		      AddrProcSvc addrProcSvc = new AddrProcSvc();
-		      int result = addrProcSvc.addrDelete(maidx);
+		      AddrDelSvc addrDelSvc = new AddrDelSvc();
+		      int result = addrDelSvc.addrDelete(maidx, miemail);
 		      
-		      if (result == 0) {	// ±Û »èÁ¦¿¡ ½ÇÆĞÇßÀ¸¸é
+		      if (result == 0) {	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		    	  response.setContentType("text/html; charset=utf-8");
 		    	  PrintWriter out = response.getWriter();
 		    	  out.println("<script>");
-		    	  out.println("alert('ÁÖ¼Ò »èÁ¦¿¡ ½ÇÆĞÇß½À´Ï´Ù.\n´Ù½Ã ½ÃµµÇØ ÁÖ½Ê½Ã¿À.');");
+		    	  out.println("alert('ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.\nï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö½Ê½Ã¿ï¿½.');");
 		    	  out.println("history.back();");
 		    	  out.println("<script>");
-		    	  out.close();	// ¿©±â¼­ ³¡³¿(±Û µî·Ï¿¡ ½ÇÆĞÇßÀ» ¶§, ´ÙÀ½°úÁ¤(±Û ³»¿ë º¸±â)À¸·Î ÁøÇàµÇÁö ¾Ê°Ô)
+		    	  out.close();	// ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½)
 		      }
 		      
 		      ActionForward forward = new ActionForward();
 		      forward.setRedirect(true);   
-		      // dispatch°¡ ¾Æ´Ñ sendRedirect ¹æ½ÄÀ¸·Î ÀÌµ¿(sendRedirect¹æ½ÄÀ¸·Î ÇØ¾ß urlÀÌ ¹Ù²ñ : ¹Ù²îÁö ¾ÊÀ¸¸é »õ·Î°íÄ§ÇÒ ¶§ ´Ù½Ã µî·Ï or ¼öÁ¤½ÇÇà)
+		      // dispatchï¿½ï¿½ ï¿½Æ´ï¿½ sendRedirect ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½(sendRedirectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ urlï¿½ï¿½ ï¿½Ù²ï¿½ : ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½Ä§ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ or ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 		      forward.setPath("addr_list.addr?cpage=1");
-		      // °Ô½Ã±Û º¸±â È­¸éÀ¸·Î ±İ¹æ ÀÔ·ÂµÈ ±Û ¹øÈ£¸¦ °¡Áö°í ÀÌµ¿ÇÔ
+		      // ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½İ¹ï¿½ ï¿½Ô·Âµï¿½ ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½
 		      
 		      return forward;
 		   }
