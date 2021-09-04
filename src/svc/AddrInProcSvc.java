@@ -13,14 +13,14 @@ public class AddrInProcSvc {
 		MemberDao memberDao = MemberDao.getInstance();
 		memberDao.setConnection(conn);
 
-		result = memberDao.AddrInsert(memberInfo);
+		result = memberDao.addrInsert(memberInfo);
 		
 		if (result >= 1)	commit(conn);	
 		else				rollback(conn);	
 		
 		close(conn);
 		
-		System.out.println("¾Æ¾Æ, ¿©±â´Â AddrInProcSvc");
+		System.out.println("ï¿½Æ¾ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ AddrInProcSvc");
 				
 		return result;
 	}

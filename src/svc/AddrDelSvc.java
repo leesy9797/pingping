@@ -7,20 +7,20 @@ import dao.*;
 import vo.*;
 
 public class AddrDelSvc {
-	public int AddrDelete(int maidx, String miemail) {
-		int result = 0;	
+	public int addrDelete(int maidx, String miemail) {
+		int result = 0;
 		Connection conn = getConnection();	
 		MemberDao memberDao = MemberDao.getInstance();
 		memberDao.setConnection(conn);
 
-		result = memberDao.AddrDelete(maidx, miemail);
+		result = memberDao.addrDelete(maidx, miemail);
 		
 		if (result == 1)	commit(conn);	
 		else				rollback(conn);	
 		
 		close(conn);
 		
-		System.out.println("¾Æ¾Æ, ¿©±â´Â AddrDelSvc");
+		System.out.println("ï¿½Æ¾ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ AddrDelSvc");
 				
 		return result;
 	}

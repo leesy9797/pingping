@@ -7,20 +7,20 @@ import dao.*;
 import vo.*;
 
 public class AddrUpProcSvc {
-	public int AddrUpdate(MemberInfo memberInfo) {
+	public int addrUpdate(MemberInfo memberInfo) {
 		int result = 0;	
 		Connection conn = getConnection();	
 		MemberDao memberDao = MemberDao.getInstance();
 		memberDao.setConnection(conn);
 
-		result = memberDao.AddrUpdate(memberInfo);
+		result = memberDao.addrUpdate(memberInfo);
 		
 		if (result >= 1)	commit(conn);	
 		else				rollback(conn);	
 		
 		close(conn);
 		
-		System.out.println("¾Æ¾Æ, ¿©±â´Â AddrUpProcSvc");
+		System.out.println("ï¿½Æ¾ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ AddrUpProcSvc");
 				
 		return result;
 	}
