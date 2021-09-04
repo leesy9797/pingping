@@ -8,7 +8,7 @@ import vo.*;
 
 public class MemberDao {
 	private static MemberDao memberDao;
-	private static Connection conn;		// staticÀ¸·Î ¹Ù²Ş
+	private static Connection conn;		// staticï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 	private MemberDao() {}
 	
 	public static MemberDao getInstance() {
@@ -21,8 +21,110 @@ public class MemberDao {
 	public void setConnection(Connection conn) {
 		this.conn = conn;
 	}
+
+	// íšŒì›(ê°€ì… ìˆ˜ì • íƒˆí‡´)
+	public int memberJoin(MemberInfo memberInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		try {
+			String sql = "insert into t_member_info(mi_email, mi_pwd, mi_name, mi_nick, mi_birth, "
+					+ " mi_gender, mi_phone, mi_issms, mi_isemail, mi_point, mi_recommend) "
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberInfo.getMi_email());
+			pstmt.setString(2,memberInfo.getMi_pwd());
+			pstmt.setString(3,memberInfo.getMi_name());
+			pstmt.setString(4,memberInfo.getMi_nick());
+			pstmt.setString(5,memberInfo.getMi_birth());
+			pstmt.setString(6,memberInfo.getMi_gender());
+			pstmt.setString(7,memberInfo.getMi_phone());
+			pstmt.setString(8,memberInfo.getMi_issms());
+			pstmt.setString(9,memberInfo.getMi_isemail());
+			pstmt.setInt(10, 2000);
+			pstmt.setString(11,memberInfo.getMi_recommend());
+
+			System.out.println("íšŒì›ê°€ì… = " +pstmt);
+
+			result = pstmt.executeUpdate();
+
+			if (result > 0) {
+				sql = "insert into t_member_point (mi_email, mp_point, mp_kind, mp_content) " +
+						" values (?, ?, ?, ?)";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, memberInfo.getMi_email());
+				pstmt.setInt(2, 2000);
+				pstmt.setString(3, "d");
+				pstmt.setString(4, "ê°€ì… ì¶•í•˜ê¸ˆ");
+
+				System.out.println("íšŒì›ê°€ì… = " + pstmt);
+				result += pstmt.executeUpdate();
+			}
+
+
+		} catch(Exception e) {
+			System.out.println("memberJoin() ë©”ì†Œë“œ ì˜¤ë¥˜");
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int memberUpdate(MemberInfo memberInfo) {
+		int result = 0;
+		Statement stmt = null;
+
+		try {
+			String sql = "update t_member_info set ";
+
+			if (!memberInfo.getMi_pwd().equals("")) {
+				sql += " mi_pwd = '" + memberInfo.getMi_pwd() + "', ";
+			}
+			sql += " mi_nick = '"	+ memberInfo.getMi_nick()	+ "', ";
+			sql += " mi_phone = '"	+ memberInfo.getMi_phone()	+ "', ";
+			sql += " mi_issms = '"	+ memberInfo.getMi_issms()	+ "', ";
+			sql += " mi_isemail = '"	+ memberInfo.getMi_isemail()	+ "' ";
+			sql += " where mi_email = '"	+ memberInfo.getMi_email()	+ "' ";
+
+			System.out.println("ìˆ˜ì •ì¿¼ë¦¬=" + sql);
+			stmt = conn.createStatement();
+			System.out.println("stmt=" + stmt);
+			result = stmt.executeUpdate(sql);
+
+		} catch(Exception e) {
+			System.out.println("memberUpdate() ë©”ì†Œë“œ ì˜¤ë¥˜");
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		System.out.println(result);
+
+		return result + 1;	//ì„œë¹„ìŠ¤ íŒŒì¼ì—ì„œ + ìˆ˜ëŸ‰ì„ ë§ì¶°ì¤˜ì•¼ í•´ì„œ ì´ë¯¸ 2ê°œê°€ ìˆê³  +1ê°œ ì¶”ê°€ìš”
+	}
+
+	public int memberDelete(String miid) {
+		int result = 0;
+		Statement stmt = null;
+
+		try {
+			String sql = "update t_member_info set mi_isactive = 'n' " +
+					" where mi_email = '" + miid + "' ";
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+
+		} catch(Exception e) {
+			System.out.println("memberDelete() ë©”ì†Œë“œ ì˜¤ë¥˜");
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		return result;
+	}
 	
-	public static MemberInfo searchId(String uname, String phone) { // staticÀ¸·Î ¹Ù²Ş
+	public static MemberInfo searchId(String uname, String phone) { // staticï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 		Statement stmt = null;
 		ResultSet rs = null;
 		MemberInfo memberInfo = null;
@@ -35,14 +137,14 @@ public class MemberDao {
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
-			// rs¿¡ º¸¿©ÁÙ »óÇ°ÀÌ ÀÖÀ» °æ¿ì 
+			// rsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 				memberInfo = new MemberInfo();
 				memberInfo.setMi_email(rs.getString(1));
 	            System.out.println(memberInfo.getMi_email());
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("searchId() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("searchId() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -52,7 +154,7 @@ public class MemberDao {
 
 	}
 	
-	public static MemberInfo resetPwd(String uname, String phone) { // staticÀ¸·Î ¹Ù²Ş
+	public static MemberInfo resetPwd(String uname, String phone) { // staticï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 		Statement stmt = null;
 		ResultSet rs = null;
 		MemberInfo memberInfo = null;
@@ -65,7 +167,7 @@ public class MemberDao {
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
-			// rs¿¡ º¸¿©ÁÙ »óÇ°ÀÌ ÀÖÀ» °æ¿ì 
+			// rsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 				memberInfo = new MemberInfo();
 				memberInfo.setMi_email(rs.getString(1));
 				
@@ -73,7 +175,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("resetPwd() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -83,7 +185,7 @@ public class MemberDao {
 
 	}
 
-	public static MemberInfo chkEmail(String email) { // staticÀ¸·Î ¹Ù²Ş
+	public static MemberInfo chkEmail(String email) { // staticï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 		Statement stmt = null;
 		ResultSet rs = null;
 		MemberInfo memberInfo = null;
@@ -95,14 +197,14 @@ public class MemberDao {
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
-			// rs¿¡ º¸¿©ÁÙ »óÇ°ÀÌ ÀÖÀ» °æ¿ì 
+			// rsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 				memberInfo = new MemberInfo();
 				memberInfo.setMi_email(rs.getString(1));
 	            System.out.println(memberInfo.getMi_email());
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("resetPwd() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -112,7 +214,7 @@ public class MemberDao {
 
 	}
 	
-	public static int setPwd(MemberInfo memberInfo) { // staticÀ¸·Î ¹Ù²Ş
+	public static int setPwd(MemberInfo memberInfo) { // staticï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½
 		Statement stmt = null;
 		int result = 0;
 		
@@ -124,7 +226,7 @@ public class MemberDao {
 			result = stmt.executeUpdate(sql);
 			
 		} catch(Exception e) {
-			System.out.println("resetPwd() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("resetPwd() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -166,7 +268,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("getAddrList() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("getAddrList() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -176,7 +278,7 @@ public class MemberDao {
 		return addrList;
 	}
 	
-	public int AddrInsert(MemberInfo memberInfo) {
+	public int addrInsert(MemberInfo memberInfo) {
 		int result = 0;
 		
 		Statement stmt = null;
@@ -188,7 +290,7 @@ public class MemberDao {
 			if (memberInfo.getMa_basic().equals("y")) {
 				sql = "update t_member_addr set ma_basic = 'n' where mi_email = '" + memberInfo.getMi_email() + "' ";
 				result = stmt.executeUpdate(sql);
-				System.out.println("Ã¹ ¹øÂ° sql : " + sql);
+				System.out.println("Ã¹ ï¿½ï¿½Â° sql : " + sql);
 				
 			} 
 			
@@ -198,12 +300,12 @@ public class MemberDao {
 						 memberInfo.getMa_phone() + "', '" + memberInfo.getMa_zip() + "', '" + 
 						 memberInfo.getMa_addr1() + "','" + memberInfo.getMa_addr2() + "', '" + 
 						 memberInfo.getMa_basic() + "')";
-			System.out.println("µÎ ¹øÂ° sql : " + sql);
+			System.out.println("ï¿½ï¿½ ï¿½ï¿½Â° sql : " + sql);
 					
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("AddrInsert() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("AddrInsert() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -212,7 +314,7 @@ public class MemberDao {
 		return result;
 	}
 	
-	public int AddrUpdate(MemberInfo memberInfo) {
+	public int addrUpdate(MemberInfo memberInfo) {
 		Statement stmt = null;
 		
 		int result = 0;
@@ -224,7 +326,7 @@ public class MemberDao {
 			if (memberInfo.getMa_basic().equals("y")) {
 				sql = "update t_member_addr set ma_basic = 'n' where mi_email = '" + memberInfo.getMi_email() + "' ";
 				result = stmt.executeUpdate(sql);
-				System.out.println("Ã¹ ¹øÂ° sql : " + sql);
+				System.out.println("Ã¹ ï¿½ï¿½Â° sql : " + sql);
 				
 			} 
 			sql = "update t_member_addr set ma_name = '" + memberInfo.getMa_name() + "', ma_receiver = '" +
@@ -232,12 +334,12 @@ public class MemberDao {
 				  memberInfo.getMa_zip() + "', ma_addr1 = '" + memberInfo.getMa_addr1() + "', ma_addr2 = '" +
 				  memberInfo.getMa_addr2() + "', ma_basic = '" + memberInfo.getMa_basic() + "' " + 
 				  " where ma_idx = '" + memberInfo.getMa_idx() + "' and mi_email = '" + memberInfo.getMi_email() + "' ";
-			System.out.println("µÎ ¹øÂ° sql : " + sql);
+			System.out.println("ï¿½ï¿½ ï¿½ï¿½Â° sql : " + sql);
 						
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("cartUpdate() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("cartUpdate() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -246,7 +348,7 @@ public class MemberDao {
 		return result;
 	}
 	
-	public int AddrDelete(int maidx, String miemail) {
+	public int addrDelete(int maidx, String miemail) {
 		Statement stmt = null;
 		
 		int result = 0;
@@ -255,12 +357,12 @@ public class MemberDao {
 			stmt = conn.createStatement();
 			
 			String sql = "delete from t_member_addr  where ma_idx = '" + maidx + "' and mi_email = '" + miemail + "' ";
-			System.out.println("µÎ ¹øÂ° sql : " + sql);
+			System.out.println("ï¿½ï¿½ ï¿½ï¿½Â° sql : " + sql);
 						
 			result = stmt.executeUpdate(sql);
 
 		} catch(Exception e) {
-			System.out.println("AddrDelete() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("AddrDelete() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(stmt);
@@ -299,7 +401,7 @@ public class MemberDao {
 			 }
 			
 		} catch(Exception e) {
-			System.out.println("getAddrInfo() ¸Ş¼Òµå ¿À·ù");
+			System.out.println("getAddrInfo() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -324,7 +426,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getPointCount() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getPointCount() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -338,7 +440,7 @@ public class MemberDao {
 	      ResultSet rs = null;   
 	      int save = 0, use = 0, availablePoint = 0;
 
-	      try {   // »ç¿ë°¡´É Æ÷ÀÎÆ® = Àû¸³Æ÷ÀÎÆ® - »ç¿ëÆ÷ÀÎÆ®
+	      try {   // ï¿½ï¿½ë°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	         String sql = "select sum(mp_point) from t_member_point where mi_email = 'test1@gmail.com' and mp_kind <> 'u'";
 	         stmt = conn.createStatement();
 	         rs = stmt.executeQuery(sql);
@@ -353,7 +455,7 @@ public class MemberDao {
 	         availablePoint = save - use;
 	         
 	      } catch(Exception e) {
-	         System.out.println("getAvailablePoint() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getAvailablePoint() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(stmt);
@@ -395,7 +497,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getPointList() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getPointList() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -426,7 +528,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowInfo() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getFollowInfo() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -467,7 +569,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowerList() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getFollowerList() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
@@ -508,7 +610,7 @@ public class MemberDao {
 	         }
 	         
 	      } catch(Exception e) {
-	         System.out.println("getFollowingList() ¸Ş¼Òµå ¿À·ù");
+	         System.out.println("getFollowingList() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½");
 	         e.printStackTrace();
 	      } finally {
 	         close(rs);
